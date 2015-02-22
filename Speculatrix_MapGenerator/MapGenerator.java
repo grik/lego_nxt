@@ -104,6 +104,7 @@ public class MapGenerator {
 			System.out.println("food_index: " + i + " ### cluster size: "
 					+ cluster[i][0] + " ");
 		}
+		System.out.print("\n");
 	}
 
 	/**
@@ -231,10 +232,12 @@ public class MapGenerator {
 	}
 
 	public static void main(String[] args) {
-		
+
 		// set starting point: the middle of the array
-		int starting_field_row = (int) Math.floor(map_speculatrix.length/2);
-		int starting_field_col = (int) Math.floor(map_speculatrix[0].length/2);
+		// put there 2 to prevent putting there a food field
+		int starting_field_row = (int) Math.floor(map_speculatrix.length / 2);
+		int starting_field_col = (int) Math
+				.floor(map_speculatrix[0].length / 2);
 		map_speculatrix[starting_field_row][starting_field_col] = 2;
 
 		// amount of clusters with food
@@ -397,6 +400,14 @@ public class MapGenerator {
 				i -= 1;
 			}
 
+			// if cluster is bigger than 1, the additional pixels have to be
+			// placed near "core" field
+			//
+			// there are at least two ways to place the cluster:
+			// 1. Center-oriented
+			// 2. Peripheral-oriented (worm-like)
+			// Here I use the centered like. Grass (food for the turtles)
+			// usually grows in all directions from one point.
 			if (fields_changed_available != 0) {
 				System.out.println("fields_changed_available: "
 						+ fields_changed_available);
@@ -463,19 +474,11 @@ public class MapGenerator {
 
 			fields_changed_available = 0;
 
-			// // if cluster is bigger than 1 it has to be placed near "core"
-			// // field
-			// // there are at least two ways to place the cluster:
-			// // 1. Center-oriented
-			// // 2. Peripheral-oriented (worm-like)
-			// // Here I use the centered like. Grass (food for the turtles)
-			// // usually grows in all directions from one point.
-
 			map_show();
 
 		}
 
-//		map_show();
+		// map_show();
 		food_cluster_size_show(food_cluster_size);
 		map_clean(map_speculatrix);
 		map_show();
@@ -488,7 +491,8 @@ public class MapGenerator {
 				}
 			}
 		}
-		System.out.println("It is:        " + count);
+		System.out.println("There are :      " + count
+				+ " pixels with the food.");
 
 		count = 0;
 
@@ -496,7 +500,8 @@ public class MapGenerator {
 			count += food_cluster_size[i][0];
 		}
 		count += food_amount;
-		System.out.println("It should be: " + count);
+		System.out.println("There should be: " + count
+				+ " pixels with the food.");
 
 	}
 }
