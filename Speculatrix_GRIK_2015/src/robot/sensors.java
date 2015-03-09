@@ -1,4 +1,4 @@
-package robocik;
+package robot;
 
 import sieci.nn_kolor_pola;
 import lejos.nxt.Button;

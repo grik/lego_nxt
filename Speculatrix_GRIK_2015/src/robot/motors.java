@@ -1,4 +1,4 @@
-package robocik;
+package robot;
 
 import lejos.nxt.*;
 
