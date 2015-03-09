@@ -15,7 +15,7 @@ public class SpeculatrixGRIK {
 
 	/**
 	 * 
-	 * @author Mikolaj "Jesmasta" Buchwald
+	 * @author Mikolaj "Cereberus" Buchwald
 	 * @param args
 	 * @throws InterruptedException
 	 * 
@@ -29,49 +29,35 @@ public class SpeculatrixGRIK {
 		int rand_x = 0;
 		int rand_y = 0;
 		
-		// TODO Auto-generated method stub
-		
+        // initiate the map
+        // map_positions() sets the centimeters for every point in the map's 2D array
 		map.map_positions = map.create_map_positions();
+        // fill_main() fills the map with 2's (except from the starting point 0,0)
 		map.map_main = map.fill_map_main();
 
 		System.out.println("Press any button, please");
 		Button.waitForAnyPress();
 		System.out.println("I'm ready to proceed");
 		
+        // Set up the timer and prompt the info about it.
 		timer.setDaemon(true);
 		timer.start();
 		System.out.println("timer start");
 
 		motors.initLegacyNavi();
 		
-		int[] randomed = new int[2];
-		
+        // A loop thats sends robot to some random places.
+        // This is the very beginning of the control condition.
 		for (int i=0; i<4; i++){
-			randomed = tools.randInt(0,5);
 			rand_x = tools.randInt(0, 5)[0];
 			rand_y = tools.randInt(0, 5)[1];
 			System.out.println("x: " + rand_x + " y: " + rand_y);
 			motors.nav_leg.goTo(map.map_positions[rand_x][rand_y][0], map.map_positions[rand_x][rand_y][1], false);
 		}
 		
-		
-//		motors.nav_leg.goTo(map.map_positions[0][3][0], map.map_positions[0][3][1], false);
-//		motors.nav_leg.travel(16*6, false);
-
-//		while (true) {
-//
-//			motors.nav_leg.goTo(80, 80, false);
-//
-////			System.out.println(sensors.jakiKolorPola() + " " + map.square_side);
-////			System.out.println("x:" + map.get_location()[0] + "; y:"
-////					+ map.get_location()[1]);
-//			Thread.sleep(2000);
-//
-//		}
+        // wait for the final button press before exiting the program
 		System.out.println("Press any button, please");
 		Button.waitForAnyPress();
 	}
 
 }
-
-// }
