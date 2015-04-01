@@ -6,6 +6,7 @@ public class MapGenerator {
 
 	// map size in positions in 2d array
 	public static int[][] map_speculatrix = new int[15][15];
+	public static int food_max = 0;
 
 	/**
 	 * Prints the Speculatrix map to the console
@@ -252,7 +253,7 @@ public class MapGenerator {
 		map_speculatrix[starting_field_row][starting_field_col] = 2;
 
 		// amount of clusters with food
-		int food_amount = 12;
+		int food_amount = 10;
 
 		// define how big the single cluster of food will be: e.g.: from 1 to 4
 		// food_size[0] = 1;
@@ -343,7 +344,8 @@ public class MapGenerator {
 
 			// randomize some field from fields_aval_locations[][]
 			// and assign its locations
-			field_randomized = rand.randInt(0, fields_aval_locations.length - 1);
+			field_randomized = rand
+					.randInt(0, fields_aval_locations.length - 1);
 			field_randomized_location[0] = fields_aval_locations[field_randomized][0];
 			field_randomized_location[1] = fields_aval_locations[field_randomized][1];
 
@@ -442,7 +444,7 @@ public class MapGenerator {
 
 					int counter = counter_available;
 					for (int k = 0; k < surrounding_food_available.length; k++) {
-						System.out.println("counter: " + counter);
+						// System.out.println("counter: " + counter);
 						if (surrounding_food_available[k][2] == 2) {
 							if (counter != 0) {
 								fields_around_core[counter - 1][0] = surrounding_food_available[k][0];
@@ -456,7 +458,8 @@ public class MapGenerator {
 								+ ";    y: " + fields_around_core[l][1]);
 					}
 
-					field_to_feed = rand.randInt(0, fields_around_core.length - 1);
+					field_to_feed = rand.randInt(0,
+							fields_around_core.length - 1);
 					map_speculatrix[fields_around_core[field_to_feed][0]][fields_around_core[field_to_feed][1]] = 1;
 
 					System.out.println(counter_available + " "
@@ -485,7 +488,11 @@ public class MapGenerator {
 
 			fields_changed_available = 0;
 
-			map_show(map_speculatrix);
+			/*
+			 * 
+			 * To be able to see map during generating uncomment the line below
+			 */
+			// map_show(map_speculatrix);
 
 		}
 
@@ -505,6 +512,7 @@ public class MapGenerator {
 		System.out.println("There are :      " + count
 				+ " pixels with the food.");
 
+		food_max = count;
 		count = 0;
 
 		for (int i = 0; i < food_cluster_size.length; i++) {

@@ -136,7 +136,8 @@ public class linear_path {
 
 		// check how many food fields there are in the path
 		for (int i = 0; i < coord_correct.length; i++) {
-			if (coord_correct[i][2] == 1) {
+			if (coord_correct[i][2] == 1
+					&& map_walk[coord_correct[i][0]][coord_correct[i][1]] != 3) {
 				food_detected += 1;
 			}
 		}
@@ -148,10 +149,16 @@ public class linear_path {
 			// get the food locations
 			int[][] food_loc = new int[food_detected][2];
 			for (int i = 0; i < coord_correct.length; i++) {
-				if (coord_correct[i][2] == 1) {
-					food_loc[food_detected - 1][0] = coord_correct[i][0];
-					food_loc[food_detected - 1][1] = coord_correct[i][1];
+				if (coord_correct[i][2] == 1 && map_walk[coord_correct[i][0]][coord_correct[i][1]] != 3) {
 					food_detected -= 1;
+//					System.out.println(food_detected);
+//					System.out.println(food_loc[food_detected][0]);
+//					System.out.println(food_loc[food_detected][0] + " = " + coord_correct[i][0]);
+//					System.out.println(food_loc[food_detected][1] + " = " + coord_correct[i][1]);
+					
+					food_loc[food_detected][0] = coord_correct[i][0];
+					food_loc[food_detected][1] = coord_correct[i][1];
+					
 				}
 			}
 			// iterate trough the food locations, check which one is the nearest
@@ -175,7 +182,10 @@ public class linear_path {
 			// walk the path until you find the food field
 			for (int i = 0; i < coord_correct.length; i++) {
 				if (distance(x1, y1, coord_correct[i][0], coord_correct[i][1]) < near_dist) {
-					map_walk[coord_correct[i][0]][coord_correct[i][1]] = coord_correct[i][2];
+					if (map_walk[coord_correct[i][0]][coord_correct[i][1]] != 3) {
+						map_walk[coord_correct[i][0]][coord_correct[i][1]] = coord_correct[i][2];
+					}
+
 				}
 				if (distance(x1, y1, coord_correct[i][0], coord_correct[i][1]) == near_dist) {
 					map_walk[coord_correct[i][0]][coord_correct[i][1]] = 3;
@@ -185,7 +195,9 @@ public class linear_path {
 		// if there are no food fields just walk the path
 		else {
 			for (int i = 0; i < coord_correct.length; i++) {
-				map_walk[coord_correct[i][0]][coord_correct[i][1]] = coord_correct[i][2];
+				if (map_walk[coord_correct[i][0]][coord_correct[i][1]] != 3) {
+					map_walk[coord_correct[i][0]][coord_correct[i][1]] = coord_correct[i][2];
+				}
 			}
 			x_found = coord_correct[coord_correct.length - 1][0];
 			y_found = coord_correct[coord_correct.length - 1][1];
@@ -194,16 +206,16 @@ public class linear_path {
 		}
 
 		dist = distance(x1, y1, x_found, y_found);
-		 
+
 		degree_current = degree(x1, y1, x_found, y_found);
 		System.out.println("degree_previous: " + degree_previous);
 		System.out.println("degree_current: " + degree_current);
-		
-		//TODO: to get rota the direction is needed
-//		rota = degree_previous - degree_current;
+
+		// TODO: to get rota the direction is needed
+		// rota = degree_previous - degree_current;
 		rota = Math.abs(degree_previous - degree_current);
 		degree_previous = degree_current;
-		
+
 		System.out.println("rota: " + rota);
 		return map_walk;
 	}
